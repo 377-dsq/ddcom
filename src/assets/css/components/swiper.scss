@@ -1,0 +1,53 @@
+.swiper {
+  width:100%;
+  .swiper-container{
+    width:100%;
+    overflow: hidden;
+    position: relative;
+    .swiper-wrap{
+      display: flex;
+    }
+    .pagination{
+      position: absolute;
+      bottom: 5%;
+      width: 100%;
+      text-align: center;
+      .indicator{
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border: 1px solid #ffffff;
+        border-radius: 50%;
+        margin: 0 5px;
+        cursor: pointer;
+      }
+      .picked{
+        background-color: #ffffff;
+      }
+    }
+    .swiperbtn{
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      .pre-btn{
+        width: 30px;
+        height: 30px;
+        background: url('~@img/left-right.png') no-repeat left center;
+        float: left;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+      .next-btn{
+        width: 30px;
+        height: 30px;
+        background: url('~@img/left-right.png') no-repeat right center;
+        float: right;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+
+    }
+    
+  }
+}
