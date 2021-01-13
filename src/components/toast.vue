@@ -25,7 +25,7 @@ export default {
         case 'info':
           imglink = require('@res/icon/hint-b.svg')
           break;
-        case 'warning':
+        case 'warn':
           imglink = require('@res/icon/hint-y.svg')
           break;
         case 'success':

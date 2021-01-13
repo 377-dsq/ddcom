@@ -69,12 +69,6 @@ export default {
         },
       ]
     }
-  },
-  created() {
-    setTimeout(() => {
-      this.$toast.info('this is a message', 1000)
-      this.$toast.success('this is a success message')
-    }, 500);
   }
 }
 </script>

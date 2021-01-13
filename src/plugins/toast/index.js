@@ -10,7 +10,7 @@ const initInstance = () => {
 }
 function showMsg(message, type, duration) {
   duration = duration && parseInt(duration) && parseInt(duration) > 0 ? parseInt(duration) : 3000
-  const typeList = ['info', 'warning', 'success', 'error']
+  const typeList = ['info', 'warn', 'success', 'error']
   type = typeList.includes(type)? type : 'info'
   instance || initInstance()
   const toast = Object.assign(instance, {
@@ -29,8 +29,8 @@ export default {
   success(msg, duration) {
     showMsg(msg, 'success', duration)
   },
-  warning(msg, duration) {
-    showMsg(msg, 'warning', duration)
+  warn(msg, duration) {
+    showMsg(msg, 'warn', duration)
   },
   error(msg, duration) {
     showMsg(msg, 'error', duration)
