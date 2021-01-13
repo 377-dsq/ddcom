@@ -11,15 +11,15 @@
 
 <script>
 
-import Swiper from '../../components/swiper'
-import SwiperSlider from '../../components/swiper-slider'
+import Swiper from '@com/swiper'
+import SwiperSlider from '@com/swiper-slider'
 
 export default {
   name: 'home',
   components: {
     Swiper,
     SwiperSlider
-  }
+  },
 }
 </script>
 

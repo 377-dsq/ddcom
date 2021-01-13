@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import ScrollTab from '../../components/scrollTab'
+import ScrollTab from '@com/scrollTab'
 export default {
   name: 'eg-scroll-tab',
   components: {
@@ -69,6 +69,12 @@ export default {
         },
       ]
     }
+  },
+  created() {
+    setTimeout(() => {
+      this.$toast.info('this is a message', 1000)
+      this.$toast.success('this is a success message')
+    }, 500);
   }
 }
 </script>
