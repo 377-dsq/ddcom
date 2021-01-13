@@ -13,12 +13,13 @@ function showMsg(message, type, duration) {
   const typeList = ['info', 'warn', 'success', 'error']
   type = typeList.includes(type)? type : 'info'
   instance || initInstance()
-  const toast = Object.assign(instance, {
+  Object.assign(instance, {
     message,
     type,
     duration,
   })
-  toast.show()
+
+  instance.show()
   return this
 }
 
