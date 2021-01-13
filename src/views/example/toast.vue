@@ -21,7 +21,7 @@ export default {
       this.$toast.warn('this is a warning message')
     },
     toastSuccess() {
-      this.$toast.info('this is a success message')
+      this.$toast.success('this is a success message')
     }
   }
 }
