@@ -42,13 +42,16 @@ export default {
     }
   },
   beforeDestroy() {
-    this.$el && documen.body.removeChild($el)
+    this.$el && document.body.removeChild(this.$el)
   },
   methods: {
     show() {
+      if (timer) {
+        timer = null
+      }
       document.body.appendChild(this.$el)
       this.showToast = true
-      setTimeout(() => {
+      let timer = setTimeout(() => {
         this.showToast = false
       }, this.duration);
     }

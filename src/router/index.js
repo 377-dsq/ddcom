@@ -4,8 +4,7 @@ import VueRouter from 'vue-router'
 const Swiper = () => import('../views/example/swiper.vue')
 const ScrollTab = () => import('../views/example/scrollTab.vue')
 const Toast = () => import('../views/example/toast.vue')
-
-
+const Waterfall = () => import('../views/example/waterfall.vue')
 
 Vue.use(VueRouter)
 
@@ -21,6 +20,10 @@ const routes = [
   {
     component: Toast,
     path: '/toast'
+  },
+  {
+    component: Waterfall,
+    path: '/waterfall'
   },
 ]
 

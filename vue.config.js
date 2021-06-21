@@ -14,5 +14,8 @@ module.exports = {
       .set('@res', resolve('src/assets'))
       .set('@css', resolve('src/assets/css'))
       .set('@img', resolve('src/assets/img'))
+  },
+  devServer: {
+    disableHostCheck: true
   }
 }
