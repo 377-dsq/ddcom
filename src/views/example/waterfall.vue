@@ -1,18 +1,21 @@
 <template>
-  <div class="waterfall">
-    <waterfall :col="2" :gutterWidth="0" :data="morePriList" class="goods-list">
+  <div class="waterfall" v-if="morePriList.length">
+    <div class="te">{{morePriList.length}}</div>
+    <waterfall :col="2" :dataList="morePriList" class="goods-list" @loadmore="loadmore" @scroll="scroll">
       <div class="list-item" v-for="(item, index) in morePriList" :key="index">
-        <img :src="item.commodityInfo.img" alt="">
+        <img v-if="item.privilegeBaseInfo" class="img" :src="item.privilegeBaseInfo.picUrls.area" alt="">
+        <div class="index">{{index}}</div>
+        <div class="vip-title" v-if="item.commodityInfo">{{ item.commodityInfo.title }}</div>
       </div>
     </waterfall>
   </div>
 </template>
 
 <script>
-import waterfall from '@com/scrollTab'
+import waterfall from '@com/waterfall2'
 
 export default {
-  name: 'waterfall',
+  name: 'eg-waterfall',
   components: {
     waterfall
   },
@@ -22,8 +25,7 @@ export default {
     }
   },
   created() {
-    console.log('created');
-    // this.getList()
+    this.getList()
   },
   methods: {
     getList() {
@@ -39,10 +41,17 @@ export default {
         body: JSON.stringify(body)
       }).then(res => res.json()).then(res => {
         const { data: { result_rows: { list } } } = res || {}
-        this.morePriList = list 
+        this.morePriList.push(...list)
       }).catch(err => {
         console.log(err);
       })
+    },
+    loadmore() {
+      console.log('loadmore');
+      this.getList()
+    },
+    scroll() {
+      // console.log('scroll');
     }
   }
   
@@ -50,5 +59,7 @@ export default {
 </script>
 
 <style>
-
+.img{
+  width: 1.5rem;
+}
 </style>

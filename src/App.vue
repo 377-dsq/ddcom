@@ -11,6 +11,11 @@ export default {
   name: 'App',
   components: {
     
+  },
+  mounted() {
+    const html = document.documentElement
+    const width = html.offsetWidth
+    html.style.fontSize = width / 375 * 100 + 'px'
   }
 }
 </script>
