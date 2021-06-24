@@ -60,8 +60,8 @@ export default {
 
 <style>
 .header{
-  height: 2rem;
-  line-height: 2rem;
+  height: 3rem;
+  line-height: 3rem;
 }
 .img{
   width: 1rem;

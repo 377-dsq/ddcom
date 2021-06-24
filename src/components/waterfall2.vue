@@ -20,13 +20,19 @@ export default {
         return []
       }
     },
-    width: Number
+    width: Number,
+    reachBottomDistance: {
+      type: Number,
+      default: 100
+    }
   },
   data() {
     return {
       root: null,
       colNodes: [],
       colWidth: 0,
+      canLoad: true,
+      renderIndex: 0
     }
   },
   watch: {
@@ -35,10 +41,19 @@ export default {
         return
       }
       this.init()
+    },
+    dataList(nVal, oVal) {
+      if (!nVal.length || nVal.length < oVal.length) {
+        this.clearItem()
+      }
+      this.$nextTick(() => {
+        this.createColItem()
+      })
     }
   },
   mounted() {
     this.init()
+    this.scrollEvent()
   },
 
   methods: {
@@ -46,7 +61,7 @@ export default {
       this.root = this.$refs.root
       this.clearColumn()
       this.createColumn()
-      this.resize()
+      this.createColItem()
     },
 
     // 清除列
@@ -55,6 +70,16 @@ export default {
         item.remove()
       })
       this.colNodes = []
+    },
+
+    clearItem() {
+      if (!this.colNodes || !this.colNodes.length) {
+        return
+      }
+      this.colNodes.forEach(item => {
+        item.innerHTML = ''
+      })
+      this.renderIndex = 0
     },
 
     // 创建列
@@ -84,19 +109,20 @@ export default {
       return document.documentElement
     },
 
-    async resize() {
+    async createColItem() {
       if (this.isResizing) {
         return
       }
       this.isResizing = true
-      const nodes = this.$slots.default
+      const nodes = this.$slots.default.splice(this.renderIndex)
       for (let index = 0; index < nodes.length; index++) {
         const shortCol = this.getShortColumns()
         if (!shortCol) {
           return
         }
-
+        
         await this.appendChild(shortCol, nodes[index].elm)
+        this.renderIndex ++
       }
       this.isResizing = false
     },
@@ -174,6 +200,28 @@ export default {
         
       })
       
+    },
+
+    scrollEvent() {
+      const _this = this
+      window.onscroll = _this.loadMore
+      document.addEventListener('touchmove', _this.loadMore, false)
+    },
+
+    loadMore() {
+      this._loadMore()
+    },
+
+    _loadMore() {
+      const height = window.innerHeight
+      const bottom = this.root.getBoundingClientRect().bottom
+
+      if (bottom < height + this.reachBottomDistance && this.canLoad) {
+        this.canLoad = false
+        this.$emit('loadmore') 
+      } else if (bottom >= height + this.reachBottomDistance) {
+        this.canLoad = true
+      }
     }
   } 
 }
