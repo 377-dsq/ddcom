@@ -48,6 +48,8 @@ export default {
       this.createColumn()
       this.resize()
     },
+
+    // 清除列
     clearColumn() {
       this.colNodes.forEach(item => {
         item.remove()
@@ -58,15 +60,14 @@ export default {
     // 创建列
     createColumn() {
       const colNodes = []
-      const cols = parseInt(this.cols)
-      for (let index = 0; index < cols; index++) {
+      for (let index = 0; index < this.cols; index++) {
         const node = document.createElement('div')
         node.className = 'com-waterfall-cols'
         if (this.width) {
           node.style.width = this.width + 'px'
           this.colWidth = this.width
         } else {
-          const width = Math.round(1 / cols * 100)
+          const width = Math.round(1 / this.cols * 100)
           node.style.width = width + '%';
           this.colWidth = width / 100 * this.html().clientWidth
         }
@@ -94,6 +95,7 @@ export default {
         if (!shortCol) {
           return
         }
+
         await this.appendChild(shortCol, nodes[index].elm)
       }
       this.isResizing = false
@@ -115,7 +117,12 @@ export default {
       return shortNode
     },
 
+    // 将每个item放入列中
     async appendChild(parent, node) {
+      if (!node || !(node instanceof HTMLElement)) {
+        return
+      }
+
       const imgs = node.getElementsByTagName('img')
       if (!imgs || !imgs.length) {
         parent.appendChild(node)
@@ -135,6 +142,7 @@ export default {
       }
     },
 
+    // 获取图片高度
     getImgHeight(img) {
       return new Promise((resolve) => {
         const src = img.getAttribute('src')

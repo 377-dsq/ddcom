@@ -1,11 +1,11 @@
 <template>
   <div class="waterfall" v-if="morePriList.length">
-    <div class="te">{{morePriList.length}}</div>
-    <waterfall :col="2" :dataList="morePriList" class="goods-list" @loadmore="loadmore" @scroll="scroll">
+    <div class="header">{{morePriList.length}}</div>
+    <waterfall :cols="2" :dataList="morePriList" class="goods-list" @loadmore="loadmore" @scroll="scroll">
       <div class="list-item" v-for="(item, index) in morePriList" :key="index">
         <img v-if="item.privilegeBaseInfo" class="img" :src="item.privilegeBaseInfo.picUrls.area" alt="">
         <div class="index">{{index}}</div>
-        <div class="vip-title" v-if="item.commodityInfo">{{ item.commodityInfo.title }}</div>
+        <div class="title" v-if="item.commodityInfo">{{ item.commodityInfo.title }}</div>
       </div>
     </waterfall>
   </div>
@@ -59,7 +59,14 @@ export default {
 </script>
 
 <style>
+.header{
+  height: 2rem;
+  line-height: 2rem;
+}
 .img{
-  width: 1.5rem;
+  width: 1rem;
+}
+.title{
+  height: .3rem;
 }
 </style>
