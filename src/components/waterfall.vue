@@ -28,6 +28,12 @@ export default {
     reachBottomDistance: {
       type: Number,
       default: 100
+    },
+
+    // 滚动节流间隔事件，ms
+    interval: {
+      type: Number,
+      default: 100
     }
   },
   data() {
@@ -81,6 +87,7 @@ export default {
       this.colNodes = []
     },
 
+    // 清除列中元素
     clearItem() {
       if (!this.colNodes || !this.colNodes.length) {
         return
@@ -116,8 +123,9 @@ export default {
       return document.documentElement
     },
 
+    // 创建列中元素
     async createColItem() {
-      console.log(this.$slots.default)
+
       if (this.isResizing || !this.$slots.default || !this.$slots.default.length) {
         return
       }
@@ -213,10 +221,20 @@ export default {
       document.addEventListener('touchmove', _this.loadMore, false)
     },
 
+
+    // 滚动事件，节流
     loadMore() {
-      this._loadMore()
+      if (this.timer) {
+        return 
+      } 
+      this.timer = setTimeout(() => {
+        clearTimeout(this.timer)
+        this.timer = null
+        this._loadMore()
+      }, this.interval);
     },
 
+    // 上拉加载更多
     _loadMore() {
       const height = window.innerHeight
       const bottom = this.root.getBoundingClientRect().bottom
