@@ -3,8 +3,8 @@
     <div class="header">{{list.length}}</div>
     <waterfall :cols="2" :dataList="list" class="goods-list" @loadmore="loadmore" @scroll="scroll">
       <div class="list-item" v-for="(item, index) in list" :key="index">
-        <img v-if="item.privilegeBaseInfo" class="img" :src="item.privilegeBaseInfo.picUrls.area" alt="">
         <div class="index">{{index}}</div>
+        <img v-if="item.privilegeBaseInfo" class="img" :src="item.privilegeBaseInfo.picUrls.area" alt="">
         <div class="title" v-if="item.commodityInfo">{{ item.commodityInfo.title }}</div>
       </div>
     </waterfall>
@@ -60,13 +60,21 @@ export default {
 
 <style>
 .header{
-  height: 3rem;
-  line-height: 3rem;
+  /* height: 3rem;
+  line-height: 3rem; */
+}
+.list-item{
+  margin: 0 .05rem;
+  margin-bottom: .1rem;
+  border: .01rem solid #999;
+  background: #eee;
+  border-radius: .08rem;
+  padding: .1rem;
 }
 .img{
   width: 1rem;
 }
 .title{
-  height: .3rem;
+  line-height: 1.5;
 }
 </style>

@@ -141,6 +141,7 @@ export default {
         this.renderIndex++
       }
       this.isResizing = false
+      this._loadMore()
     },
 
     // 获取更矮的一列
@@ -239,7 +240,7 @@ export default {
     _loadMore() {
       const height = window.innerHeight
       const bottom = this.root.getBoundingClientRect().bottom
-
+      console.log(bottom < height + this.reachBottomDistance, this.canLoad);
       if (bottom < height + this.reachBottomDistance && this.canLoad) {
         this.canLoad = false
         this.$emit('loadmore')
