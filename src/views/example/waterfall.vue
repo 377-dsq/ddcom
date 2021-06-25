@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import waterfall from '@com/waterfall2'
+import waterfall from '@com/waterfall'
 
 export default {
   name: 'eg-waterfall',
@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      morePriList: [{}]
+      morePriList: []
     }
   },
   created() {
