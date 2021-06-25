@@ -224,6 +224,7 @@ export default {
 
     // 滚动事件，节流
     loadMore() {
+      this.$emit('scroll')
       if (this.timer) {
         return 
       } 

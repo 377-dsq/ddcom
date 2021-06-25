@@ -25,12 +25,9 @@ export default {
     }
   },
   created() {
-    console.log('cre');
     this.getList()
   },
-  beforeMount() {
-    console.log('mounte');
-  },
+
   methods: {
     getList() {
       const url = 'https://m.leka.club/route0010/leka/goods/queryRecommendPrivilegeList.json'
@@ -40,7 +37,6 @@ export default {
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
-          'origin': 'https://m.leka.club'
         }, 
         body: JSON.stringify(body)
       }).then(res => res.json()).then(res => {
@@ -55,7 +51,7 @@ export default {
       this.getList()
     },
     scroll() {
-      // console.log('scroll');
+      console.log('scroll');
     }
   }
   
