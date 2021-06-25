@@ -1,7 +1,7 @@
 <template>
   <div class="waterfall" v-if="list.length">
-    <div class="header">{{list.length}}</div>
-    <waterfall :cols="2" :dataList="list" class="goods-list" @loadmore="loadmore" @scroll="scroll">
+    <div class="header" @click="change">{{list.length}}</div>
+    <waterfall :cols="cols" :dataList="list" class="goods-list" @loadmore="loadmore" @scroll="scroll">
       <div class="list-item" v-for="(item, index) in list" :key="index">
         <div class="index">{{index}}</div>
         <img v-if="item.privilegeBaseInfo" class="img" :src="item.privilegeBaseInfo.picUrls.area" alt="">
@@ -21,7 +21,8 @@ export default {
   },
   data() {
     return {
-      list: []
+      list: [],
+      cols: 2
     }
   },
   created() {
@@ -45,6 +46,9 @@ export default {
       }).catch(err => {
         console.log(err);
       })
+    },
+    change() {
+      this.list = this.list.splice(3)
     },
     loadmore() {
       console.log('loadmore');

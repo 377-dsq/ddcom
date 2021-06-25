@@ -38,10 +38,10 @@ export default {
   },
   data() {
     return {
-      root: null,
-      colNodes: [],
-      canLoad: true,
-      renderIndex: 0
+      root: null, // 组件根元素
+      colNodes: [], // 每一列的元素
+      canLoad: true, // 是否可以加载更多
+      renderIndex: 0 // 已渲染的元素索引
     }
   },
   watch: {
@@ -70,6 +70,8 @@ export default {
   methods: {
     init() {
       this.root = this.$refs.root
+      this.canLoad = true
+      this.renderIndex = 0
       this.clearColumn()
       this.createColumn()
       this.$nextTick(() => {
@@ -96,6 +98,7 @@ export default {
         item.innerHTML = ''
       })
       this.renderIndex = 0
+      this.canLoad = true
     },
 
     // 创建列
@@ -126,10 +129,10 @@ export default {
     // 创建列中元素
     async createColItem() {
 
-      if (this.isResizing || !this.$slots.default || !this.$slots.default.length) {
+      if (this.isRendering || !this.$slots.default || !this.$slots.default.length) {
         return
       }
-      this.isResizing = true
+      this.isRendering = true
       const nodes = this.$slots.default.splice(this.renderIndex)
       for (let index = 0; index < nodes.length; index++) {
         const shortCol = this.getShortColumns()
@@ -140,7 +143,7 @@ export default {
         await this.appendChild(shortCol, nodes[index].elm)
         this.renderIndex++
       }
-      this.isResizing = false
+      this.isRendering = false
       this._loadMore()
     },
 
@@ -240,7 +243,6 @@ export default {
     _loadMore() {
       const height = window.innerHeight
       const bottom = this.root.getBoundingClientRect().bottom
-      console.log(bottom < height + this.reachBottomDistance, this.canLoad);
       if (bottom < height + this.reachBottomDistance && this.canLoad) {
         this.canLoad = false
         this.$emit('loadmore')
