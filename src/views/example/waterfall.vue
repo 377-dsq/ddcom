@@ -1,8 +1,8 @@
 <template>
-  <div class="waterfall" v-if="morePriList.length">
-    <div class="header">{{morePriList.length}}</div>
-    <waterfall :cols="2" :dataList="morePriList" class="goods-list" @loadmore="loadmore" @scroll="scroll">
-      <div class="list-item" v-for="(item, index) in morePriList" :key="index">
+  <div class="waterfall" v-if="list.length">
+    <div class="header">{{list.length}}</div>
+    <waterfall :cols="2" :dataList="list" class="goods-list" @loadmore="loadmore" @scroll="scroll">
+      <div class="list-item" v-for="(item, index) in list" :key="index">
         <img v-if="item.privilegeBaseInfo" class="img" :src="item.privilegeBaseInfo.picUrls.area" alt="">
         <div class="index">{{index}}</div>
         <div class="title" v-if="item.commodityInfo">{{ item.commodityInfo.title }}</div>
@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      morePriList: []
+      list: []
     }
   },
   created() {
@@ -41,7 +41,7 @@ export default {
         body: JSON.stringify(body)
       }).then(res => res.json()).then(res => {
         const { data: { result_rows: { list } } } = res || {}
-        this.morePriList.push(...list)
+        this.list.push(...list)
       }).catch(err => {
         console.log(err);
       })
@@ -51,7 +51,7 @@ export default {
       this.getList()
     },
     scroll() {
-      console.log('scroll');
+      // console.log('scroll');
     }
   }
   
