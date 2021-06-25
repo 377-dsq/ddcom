@@ -21,11 +21,15 @@ export default {
   },
   data() {
     return {
-      morePriList: []
+      morePriList: [{}]
     }
   },
   created() {
+    console.log('cre');
     this.getList()
+  },
+  beforeMount() {
+    console.log('mounte');
   },
   methods: {
     getList() {

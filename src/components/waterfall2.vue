@@ -30,7 +30,6 @@ export default {
     return {
       root: null,
       colNodes: [],
-      colWidth: 0,
       canLoad: true,
       renderIndex: 0
     }
@@ -47,7 +46,9 @@ export default {
         this.clearItem()
       }
       this.$nextTick(() => {
-        this.createColItem()
+        setTimeout(() => {
+          this.createColItem()
+        }, 200)
       })
     }
   },
@@ -61,7 +62,11 @@ export default {
       this.root = this.$refs.root
       this.clearColumn()
       this.createColumn()
-      this.createColItem()
+      this.$nextTick(() => {
+        setTimeout(() => {
+          this.createColItem()
+        }, 200)
+      })
     },
 
     // 清除列
@@ -90,11 +95,9 @@ export default {
         node.className = 'com-waterfall-cols'
         if (this.width) {
           node.style.width = this.width + 'px'
-          this.colWidth = this.width
         } else {
-          const width = Math.round(1 / this.cols * 100)
-          node.style.width = width + '%';
-          this.colWidth = width / 100 * this.html().clientWidth
+          const width = Math.round((1 / this.cols) * 100)
+          node.style.width = width + '%'
         }
         if (!this.root) {
           this.root = this.$refs.root
@@ -110,7 +113,8 @@ export default {
     },
 
     async createColItem() {
-      if (this.isResizing) {
+      console.log(this.$slots.default)
+      if (this.isResizing || !this.$slots.default || !this.$slots.default.length) {
         return
       }
       this.isResizing = true
@@ -120,9 +124,9 @@ export default {
         if (!shortCol) {
           return
         }
-        
+
         await this.appendChild(shortCol, nodes[index].elm)
-        this.renderIndex ++
+        this.renderIndex++
       }
       this.isResizing = false
     },
@@ -155,13 +159,13 @@ export default {
         return Promise.resolve()
       } else {
         for (let index = 0; index < imgs.length; index++) {
-          const img = imgs[index];
+          const img = imgs[index]
           if (!img) {
             return
           }
           if (!img.height) {
             await this.getImgHeight(img)
-          } 
+          }
         }
         parent.appendChild(node)
         return Promise.resolve()
@@ -170,13 +174,13 @@ export default {
 
     // 获取图片高度
     getImgHeight(img) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         const src = img.getAttribute('src')
         const image = new Image()
-        image.src= src
+        image.src = src
         if (image.complete) {
           if (img.width) {
-            img.style.height = img.width / image.width * image.height
+            img.style.height = (img.width / image.width) * image.height
             resolve()
           } else {
             img.style.height = image.height
@@ -185,7 +189,7 @@ export default {
         } else {
           image.onload = () => {
             if (img.width) {
-              img.style.height = img.width / image.width * image.height
+              img.style.height = (img.width / image.width) * image.height
               resolve()
             } else {
               img.style.height = image.height
@@ -196,10 +200,7 @@ export default {
             resolve()
           }
         }
-        
-        
       })
-      
     },
 
     scrollEvent() {
@@ -218,31 +219,30 @@ export default {
 
       if (bottom < height + this.reachBottomDistance && this.canLoad) {
         this.canLoad = false
-        this.$emit('loadmore') 
+        this.$emit('loadmore')
       } else if (bottom >= height + this.reachBottomDistance) {
         this.canLoad = true
       }
     }
-  } 
+  }
 }
 </script>
 
 <style>
-.com-waterfall{
+.com-waterfall {
   width: 100%;
   position: relative;
   overflow-y: scroll;
 }
-.com-waterfall-cols{
+.com-waterfall-cols {
   float: left;
   margin: 0;
   padding: 0;
 }
-.slot-box{
+.slot-box {
   position: absolute;
   width: 0;
   height: 0;
   overflow: hidden;
 }
-
 </style>
