@@ -191,24 +191,27 @@ export default {
     // 获取图片高度
     getImgHeight(img) {
       return new Promise(resolve => {
-        const src = img.getAttribute('src')
+        const src = img.getAttribute('src') || img.getAttribute('lazy-load-src')
+        if (!src) {
+          return
+        }
         const image = new Image()
         image.src = src
         if (image.complete) {
           if (img.width) {
-            img.style.height = (img.width / image.width) * image.height
+            img.style.height = ((img.width / image.width) * image.height).toFixed(2) + 'px'
             resolve()
           } else {
-            img.style.height = image.height
+            img.style.height = image.height.toFixed(2) + 'px'
             resolve()
           }
         } else {
           image.onload = () => {
             if (img.width) {
-              img.style.height = (img.width / image.width) * image.height
+              img.style.height = ((img.width / image.width) * image.height).toFixed(2) + 'px'
               resolve()
             } else {
-              img.style.height = image.height
+              img.style.height = image.height.toFixed(2) + 'px'
               resolve()
             }
           }

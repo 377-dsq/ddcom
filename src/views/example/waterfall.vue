@@ -4,7 +4,7 @@
     <waterfall :cols="cols" :dataList="list" class="goods-list" @loadmore="loadmore" @scroll="scroll">
       <div class="list-item" v-for="(item, index) in list" :key="index">
         <div class="index">{{index}}</div>
-        <img v-if="item.privilegeBaseInfo" class="img" :src="item.privilegeBaseInfo.picUrls.area" alt="">
+        <img v-if="item.privilegeBaseInfo" class="img" v-lazyload="item.privilegeBaseInfo.picUrls.area" alt="">
         <div class="title" v-if="item.commodityInfo">{{ item.commodityInfo.title }}</div>
       </div>
     </waterfall>
